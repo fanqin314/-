@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>英语期末复习</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ================================ -->
+<!-- Navigation -->
+<!-- ================================ -->
+<div class="nav">
+    <span class="nav-item">
+        <a href="#" data-section="mc" class="active">选词填空</a>
+    </span>
+    <span class="nav-item">
+        <a href="#" data-section="exp">短语完形</a>
+    </span>
+    <span class="nav-item">
+        <a href="#" data-section="trans">中译英</a>
+    </span>
+    <span class="nav-item">
+        <a href="#" data-section="writing">写作</a>
+    </span>
+    <span class="nav-spacer"></span>
+    <button class="nav-ctl-all" onclick="toggleAllControls()" title="折叠/展开控制区"><span class="ctl-icon">▽</span> 收起</button>
+</div>
+
+<!-- ================================ -->
+<!-- Part III: 选词填空 (记忆卡版) -->
+<!-- ================================ -->
+<div class="section active" id="sec-mc">
+    <div class="section-controls" id="mcControls">
+        <div class="section-title">
+            Part III · 选词填空 <span class="badge badge-all">课后3</span>
+            <span class="sub"><span class="mode-indicator" id="mcModeLabel">当前：原句</span></span>
+        </div>
+
+        <div class="unit-tabs">
+            <button class="active" data-unit="all">全部</button>
+            <button data-unit="1">Unit 1</button>
+            <button data-unit="2">Unit 2</button>
+            <button data-unit="3">Unit 3</button>
+            <button data-unit="4">Unit 4</button>
+        </div>
+
+        <div class="progress-summary">
+            <span class="stat">已答: <span class="num" id="mcAnswered">0</span>/40</span>
+            <span class="stat">正确: <span class="num" id="mcCorrect">0</span></span>
+            <span class="stat">错题: <span class="num" id="mcWrongCount">0</span></span>
+            <span class="stat">正确率: <span class="num" id="mcRate">0%</span></span>
+            <span class="stat">已记住: <span class="num" id="mcMastered">0</span></span>
+            <button class="btn btn-outline btn-sm" onclick="toggleMCCardMode()" id="mcCardBtn">📇 记忆卡</button>
+            <button class="btn btn-toggle active" id="mcToggleMode" onclick="toggleMCMode()">简化句</button>
+            <button class="btn btn-outline btn-sm" id="mcToggleHint" onclick="toggleMCHint()">💡 提示</button>
+            <button class="btn btn-outline btn-sm" id="mcToggleWrong" onclick="toggleMCWrongOnly()">❌ 错题重练</button>
+            <button class="btn btn-outline btn-sm" onclick="resetMCWrong()" id="mcResetWrongBtn" style="display:none">🗑️ 清除错题</button>
+            <button class="btn btn-outline btn-sm" onclick="resetMC()">重置</button>
+        </div>
+    </div>
+    <div class="card-nav" id="mcCardNav" style="display:none">
+        <button class="btn btn-outline btn-sm" onclick="mcPrev()">◀ 上一题</button>
+        <span class="card-nav-counter" id="mcCardCounter">1 / 1</span>
+        <button class="btn btn-outline btn-sm" onclick="mcNext()">下一题 ▶</button>
+        <button class="btn btn-outline btn-sm" onclick="mcRevealBlank()" id="mcRevealBtn">👁 揭晓答案</button>
+        <button class="btn btn-sm btn-success" onclick="mcMarkMastered(true)">✅ 已记住</button>
+        <button class="btn btn-sm btn-warning" onclick="mcMarkMastered(false)">🔁 还需复习</button>
+        <span class="card-nav-progress" id="mcCardProgress"></span>
+    </div>
+    <div id="mcContainer"></div>
+</div>
+
+<!-- ================================ -->
+<!-- Part IV: 短语完形 (记忆卡版) -->
+<!-- ================================ -->
+<div class="section" id="sec-exp">
+    <div class="section-controls" id="expControls">
+        <div class="section-title">
+            Part IV · 短语完形 <span class="badge badge-all">课后6</span>
+            <span class="sub"><span class="mode-indicator" id="expModeLabel">当前：原句</span></span>
+        </div>
+
+        <div class="unit-tabs">
+            <button class="active" data-unit="all">全部</button>
+            <button data-unit="1">Unit 1</button>
+            <button data-unit="2">Unit 2</button>
+            <button data-unit="3">Unit 3</button>
+            <button data-unit="4">Unit 4</button>
+        </div>
+
+        <div class="progress-summary">
+            <span class="stat">已答: <span class="num" id="expAnswered">0</span>/33</span>
+            <span class="stat">正确: <span class="num" id="expCorrect">0</span></span>
+            <span class="stat">正确率: <span class="num" id="expRate">0%</span></span>
+            <span class="stat">已记住: <span class="num" id="expMastered">0</span></span>
+            <button class="btn btn-outline btn-sm" onclick="toggleExpCardMode()" id="expCardBtn">📇 记忆卡</button>
+            <button class="btn btn-toggle active" id="expToggleMode" onclick="toggleExpMode()">简化句</button>
+            <button class="btn btn-outline btn-sm" id="expToggleHint" onclick="toggleExpHint()">💡 提示</button>
+            <button class="btn btn-outline btn-sm" onclick="resetExp()">重置</button>
+        </div>
+    </div>
+    <div class="card-nav" id="expCardNav" style="display:none">
+        <button class="btn btn-outline btn-sm" onclick="expPrev()">◀ 上一题</button>
+        <span class="card-nav-counter" id="expCardCounter">1 / 1</span>
+        <button class="btn btn-outline btn-sm" onclick="expNext()">下一题 ▶</button>
+        <button class="btn btn-outline btn-sm" onclick="expRevealBlank()" id="expRevealBtn">👁 揭晓答案</button>
+        <button class="btn btn-sm btn-success" onclick="expMarkMastered(true)">✅ 已记住</button>
+        <button class="btn btn-sm btn-warning" onclick="expMarkMastered(false)">🔁 还需复习</button>
+        <span class="card-nav-progress" id="expCardProgress"></span>
+    </div>
+    <div id="expContainer"></div>
+</div>
+
+<!-- ================================ -->
+<!-- Part V: 中译英 -->
+<!-- ================================ -->
+<div class="section" id="sec-trans">
+    <div class="section-controls" id="transControls">
+        <div class="section-title">
+            Part V · 中译英 <span class="badge badge-all">Section C</span>
+            <span class="sub"><span class="mode-indicator" id="transModeLabel">模式：完整中文</span></span>
+        </div>
+        <div class="progress-summary">
+        <span class="stat">需复习: <span class="num" id="transReviewCount">0</span></span>
+        <button class="btn btn-outline btn-sm" id="toggleAllAnsBtn" onclick="toggleAllTrans()">展开答案</button>
+        <button class="btn btn-outline btn-sm" onclick="clearAllTrans()">全部清空</button>
+        <div class="trans-mode-group">
+            <button class="trans-mode-btn active" id="transMode0" onclick="setTransMode(0)">完整中文</button>
+            <button class="trans-mode-btn" id="transMode1" onclick="setTransMode(1)">关键词提示</button>
+            <button class="trans-mode-btn" id="transMode2" onclick="setTransMode(2)">填空练习</button>
+            <button class="trans-mode-btn" id="transMode3" onclick="setTransMode(3)">逐词练习</button>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="resetTransReview()">重置记录</button>
+    </div>
+</div>
+<div id="transContainer"></div>
+</div>
+
+<!-- ================================ -->
+<!-- Part II: 写作 -->
+<!-- ================================ -->
+<div class="section" id="sec-writing">
+    <div class="section-title">Part II · 写作 <span class="badge badge-all">1-4单元主题</span></div>
+    <div class="card">
+        <div class="label">写作练习 Prompt 1</div>
+        <div class="writing-prompt">
+            <div class="topic">Topic: The Impact of Social Media on Interpersonal Communication</div>
+            <div class="hint">Write an essay of about 120-150 words discussing how social media has changed the way people communicate with each other. Do you think the impact is positive or negative? (参考 Unit 1 主题)</div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="label">写作练习 Prompt 2</div>
+        <div class="writing-prompt">
+            <div class="topic">Topic: The Role of Passion and Persistence in Achieving Goals</div>
+            <div class="hint">Write an essay of about 120-150 words on how passion and persistence help people achieve their goals. (参考 Unit 2-3 主题)</div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="label">写作练习 Prompt 3</div>
+        <div class="writing-prompt">
+            <div class="topic">Topic: Entrepreneurship and Innovation in Modern China</div>
+            <div class="hint">Write an essay of about 120-150 words on entrepreneurship and innovation. Discuss why more young people choose to start their own businesses. (参考 Unit 4 主题)</div>
+        </div>
+    </div>
+</div>
+
+<!-- ================================ -->
+<!-- Scripts -->
+<!-- ================================ -->
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script src="js/mc.js"></script>
+<script src="js/exp.js"></script>
+<script src="js/trans.js"></script>
+<script>
+// 初始化 — 先恢复保存的会话状态，再渲染
+restoreSessionState();
+var mcUnit = document.querySelector('#sec-mc .unit-tabs .active')?.dataset?.unit || 'all';
+var expUnit = document.querySelector('#sec-exp .unit-tabs .active')?.dataset?.unit || 'all';
+// 同步错题重练按钮状态
+if (typeof mcWrongOnly !== 'undefined' && mcWrongOnly) {
+    var wrongBtn = document.getElementById('mcToggleWrong');
+    if (wrongBtn) { wrongBtn.classList.add('active'); wrongBtn.classList.remove('btn-outline'); wrongBtn.textContent = '✅ 错题重练中'; }
+}
+renderMC(mcUnit);
+renderExp(expUnit);
+renderTrans();
+initW2WEvents();
+</script>
+</body>
+</html>
